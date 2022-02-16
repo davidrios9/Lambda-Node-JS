@@ -1,0 +1,42 @@
+{
+    "local": {
+        "config_id": "local",
+        "PathCrearCaso": "/BIZAGIACD/odata/data/processes(6897bac5-3c8f-4ca0-95d8-3142e825144d)/start",
+        "PathObtenerWorkItem": "/BIZAGIACD/odata/data/cases(IDCASE)/workitems",
+        "PathAvanzarCaso": "/BIZAGIACD/odata/data/cases(IDCASE)/workitems(IDWORKITEM)/next",
+        "PathObtenerToken": "/BIZAGIACD/oauth2/server/token",
+        "DataObtenerToken": "grant_type=client_credentials&scope=api",
+        "Hostname": "10.104.20.160",
+        "Authorization": "Basic NWZhMmFhMjQwYzc1MmQ4YmVkZjkwY2I0NDhlY2U3MDI5NjNmN2QyMDo5OTI2ZTYyZjZlNTgyMTUxMjVkMGFlZDc3Y2VhMWIwYzEyYWU5YjFj"
+    },
+    "dev": {
+        "config_id": "dev",        
+        "PathCrearCaso": "/BIZAGIACD/odata/data/processes(6897bac5-3c8f-4ca0-95d8-3142e825144d)/start",
+        "PathObtenerWorkItem": "/BIZAGIACD/odata/data/cases(IDCASE)/workitems",
+        "PathAvanzarCaso": "/BIZAGIACD/odata/data/cases(IDCASE)/workitems(IDWORKITEM)/next",
+        "PathObtenerToken": "/BIZAGIACD/oauth2/server/token",
+        "DataObtenerToken": "grant_type=client_credentials&scope=api",
+        "Hostname": "10.104.20.160",
+        "Authorization": "Basic NWZhMmFhMjQwYzc1MmQ4YmVkZjkwY2I0NDhlY2U3MDI5NjNmN2QyMDo5OTI2ZTYyZjZlNTgyMTUxMjVkMGFlZDc3Y2VhMWIwYzEyYWU5YjFj"
+    },
+    "qa": {
+        "config_id": "qa",
+        "PathCrearCaso": "/BizagiACQ/odata/data/processes(6897bac5-3c8f-4ca0-95d8-3142e825144d)/start",
+        "PathObtenerWorkItem": "/BizagiACQ/odata/data/cases(IDCASE)/workitems",
+        "PathAvanzarCaso": "/BizagiACQ/odata/data/cases(IDCASE)/workitems(IDWORKITEM)/next",
+        "PathObtenerToken": "/BizagiACQ/oauth2/server/token",
+        "DataObtenerToken": "grant_type=client_credentials&scope=api",
+        "Hostname": "https://bizagiaca-qa.apps.ambientesbc.lab",
+        "Authorization": "Basic NWZhMmFhMjQwYzc1MmQ4YmVkZjkwY2I0NDhlY2U3MDI5NjNmN2QyMDo5OTI2ZTYyZjZlNTgyMTUxMjVkMGFlZDc3Y2VhMWIwYzEyYWU5YjFj"
+    },
+    "pdn": {
+        "config_id": "pdn",
+        "PathCrearCaso": "/BizagiAC/odata/data/processes(6897bac5-3c8f-4ca0-95d8-3142e825144d)/start",
+        "PathObtenerWorkItem": "/BizagiAC/odata/data/cases(IDCASE)/workitems",
+        "PathAvanzarCaso": "/BizagiAC/odata/data/cases(IDCASE)/workitems(IDWORKITEM)/next",
+        "PathObtenerToken": "/BizagiAC/oauth2/server/token",
+        "DataObtenerToken": "grant_type=client_credentials&scope=api",
+        "Hostname": "https://bizagiaca.apps.bancolombia.corp",
+        "Authorization": "Basic NWZhMmFhMjQwYzc1MmQ4YmVkZjkwY2I0NDhlY2U3MDI5NjNmN2QyMDo5OTI2ZTYyZjZlNTgyMTUxMjVkMGFlZDc3Y2VhMWIwYzEyYWU5YjFj"
+    }
+}
