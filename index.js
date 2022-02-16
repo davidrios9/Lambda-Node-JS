@@ -1,6 +1,9 @@
 //**Lambda Multi Oferta - MOS*/
 const bizagi = require('./src/utils/bizagi');
 const config = require('./src/config/config');
+const {obtenerRequestCrearCaso,
+       obtenerRequestAvanzarMomento1,
+       obtenerRequestAvanzarMomento2} = require('./src/utils/helpers')
 const {mEvent,avanzarCaso} = require('./src/utils/example.js');
 
 const log4js = require("log4js");
@@ -64,23 +67,23 @@ localExample = () => {
       // }
 
       const respuestaObtenerToken = await bizagi.obtenerToken(config);
-      const requestCrearCaso = await bizagi.obtenerRequestCrearCaso(bodySQS); 
+      const requestCrearCaso = await obtenerRequestCrearCaso(bodySQS); 
       const caso =  bizagi.crearCaso(requestCrearCaso, respuestaObtenerToken, config);     
       const respService = caso.then( console.log );
       console.log("response: " + JSON.stringify(respService));
     }
     else if (pasoFuncional === "Paso2" || pasoFuncional === "Paso3") {
       logger.debug("Ingreso Avanzar");
-      let requestAvanzar = pasoFuncional === "Paso2" ? bizagi.obtenerRequestAvanzarMomento1(bodySQS) : bizagi.obtenerRequestAvanzarMomento2(bodySQS);
+      let requestAvanzar = pasoFuncional === "Paso2" ? obtenerRequestAvanzarMomento1(bodySQS) : obtenerRequestAvanzarMomento2(bodySQS);
       let respuestaObtenerToken = {
         "access_token": messageAttributes.token.stringValue,//Lo envia el front en los atributos de la cola    
         "token_type": "Bearer"
       }
-      let idWorkItem = bizagi.obtenerWorkItem(bodySQS.IdCase, respuestaObtenerToken.token, config);
+      let idWorkItem = obtenerWorkItem(bodySQS.IdCase, respuestaObtenerToken.token, config);
       Promise.all([respuestaObtenerToken, idWorkItem]).then(values => {
         let idWorkItem = values[1];
         let token = values[0];
-        bizagi.avanzarCaso(requestAvanzar, idWorkItem, token, config);
+        avanzarCaso(requestAvanzar, idWorkItem, token, config);
       });
     }
   });

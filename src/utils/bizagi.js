@@ -1,26 +1,29 @@
 var log4js = require("log4js");
-
 const axios = require('axios');
+
+const { headers } = require('./helpers');
+
 const logger = log4js.getLogger();
 logger.level = "debug";
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
-let headers = (token) => {
-    return headers = {
-        'Authorization': `${token.token_type} ${token.access_token}`,
-        'Content-Type': 'application/json'
+obtenerToken = async (config) => {
+    try {
+        const options = {
+            method: 'post',
+            baseURL: `https://${config.Hostname}/${config.PathObtenerToken}`,
+            data: config.DataObtenerToken,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': config.Authorization
+            },
+        };
+        const resp = await axios(options);
+        return resp.data;
     }
-}
-
-let requestMoments = (body, xptah) => {
-    return JSON.stringify({
-        startParameters: [
-            {
-                "xpath": `idm_cat_CreditoDeConsumo.idmMOSSolicitud.${xptah}`,
-                "value": body
-            }
-        ]
-    });
+    catch (e) {
+        logger.debug(e)
+    }
 }
 
 crearCaso = async (data, token, config) => {
@@ -34,6 +37,21 @@ crearCaso = async (data, token, config) => {
         };
         return await axios(options);
     } catch (e) {
+        logger.debug(e);
+    }
+}
+
+obtenerWorkItem = async (idCase, token, config) => {
+    try {
+        const path = config.PathObtenerWorkItem.replace('IDCASE', idCase);
+        const options = {
+            baseURL: `https://${config.Hostname}${path}`,
+            method: 'post',
+            headers: headers(token)
+        };
+        await axios(options);
+    }
+    catch (e) {
         logger.debug(e);
     }
 }
@@ -57,52 +75,11 @@ avanzarCaso = async (data, idWorkItem, token, config) => {
     }
 }
 
-obtenerRequestCrearCaso = (requestSQS) => {
-    return requestMoments(requestSQS,'eJson1');
-}
 
-obtenerRequestAvanzarMomento1 = (requestSQS) => {
-    return requestMoments(requestSQS,'eJson2');
-}
 
-obtenerRequestAvanzarMomento2 = (requestSQS) => {
-    return requestMoments(requestSQS,'eJson3');
+module.exports = {
+    obtenerToken,
+    crearCaso,
+    obtenerWorkItem,
+    avanzarCaso
 }
-
-obtenerToken = async (config) => {
-    try {
-        const options = {
-            method: 'post',
-            baseURL: `https://${config.Hostname}/${config.PathObtenerToken}`,
-            data: config.DataObtenerToken,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': config.Authorization
-            },            
-        };
-       const resp = await axios(options);
-       return resp.data;
-    }
-    catch (e) {
-        logger.debug(e)
-    }
-}
-
-obtenerWorkItem = async (idCase, token, config) => {   
-        try {
-            const path = config.PathObtenerWorkItem.replace('IDCASE', idCase);
-            const options = {              
-                baseURL: `https://${config.Hostname}${path}`,
-                method: 'post',
-                headers: headers(token)          
-            };
-            await axios(options);
-        }
-        catch (e) {
-            logger.debug(e);
-        }   
-}
-
-module.exports = { crearCaso, 
-    obtenerRequestCrearCaso,
-    obtenerToken }
