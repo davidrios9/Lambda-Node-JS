@@ -1,81 +1,56 @@
-var log4js = require("log4js");
-const axios = require('axios');
+const { optionsAxios } = require('./helpers');
 
-const { headers } = require('./helpers');
+const log4js = require("log4js");
+const axios = require('axios');
+const { attempt } = require('lodash');
 
 const logger = log4js.getLogger();
 logger.level = "debug";
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
-obtenerToken = async (config) => {
+const obtenerToken = async () => {
     try {
-        const options = {
-            method: 'post',
-            baseURL: `https://${config.Hostname}/${config.PathObtenerToken}`,
-            data: config.DataObtenerToken,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': config.Authorization
-            },
-        };
+        let options = optionsAxios('obtenerToken', null, null, null);
         const resp = await axios(options);
         return resp.data;
     }
     catch (e) {
-        logger.debug(e)
+        console.log(e);
     }
 }
 
-crearCaso = async (data, token, config) => {
+const crearCaso = async (data, token) => {
     try {
-        //Peticion http Odata Bizagi
-        const options = {
-            method: 'post',
-            baseURL: `https://${config.Hostname}${config.PathCrearCaso}`,
-            data,
-            headers: headers(token)
-        };
+        let options = optionsAxios('crearCaso', token, data, null);
         return await axios(options);
     } catch (e) {
-        logger.debug(e);
+        console.log(e);;
     }
 }
 
-obtenerWorkItem = async (idCase, token, config) => {
+const obtenerWorkItem = async (idCase, token) => {
     try {
-        const path = config.PathObtenerWorkItem.replace('IDCASE', idCase);
-        const options = {
-            baseURL: `https://${config.Hostname}${path}`,
-            method: 'post',
-            headers: headers(token)
-        };
-        await axios(options);
+        let options = optionsAxios('obtenerWorkItem', token, idCase, null);
+        const resp = await axios(options);
+        return resp.data.value.map(workitem => ({
+            idWorkitem: workitem.id,
+            idCase
+        }));
     }
     catch (e) {
-        logger.debug(e);
+        console.log(e);
     }
 }
 
-avanzarCaso = async (data, idWorkItem, token, config) => {
-    try {
-        //Peticion http
-        // Obtengo el path y reemplazo el idcase y el workitem
-        const path = config.PathAvanzarCaso.replace('IDCASE', data.idCase).replace('IDWORKITEM', idWorkItem);
-        //Creo la configuración para consunmir la Odata de Bizagi
-        const options = {
-            baseURL: `https://${config.Hostname}/${path}`,
-            method: 'post',
-            data,
-            headers: headers(token)
-        };
-        await axios(options);
+const avanzarCaso = async (data, idWorkItem, token) => {
+    try {       
+        let options = optionsAxios('avanzarCaso', token, data, idWorkItem);
+        return await axios(options);
     }
     catch (e) {
-        logger.debug(e);
+        console.log(e);
     }
 }
-
-
 
 module.exports = {
     obtenerToken,
