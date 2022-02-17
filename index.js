@@ -55,7 +55,7 @@ logger.level = "debug";
 // Se realiza el proceso desde el json de ejemplo
 localExample = () => {
   debugger;
-  avanzarCasoM2.Records.forEach(async record => {
+  mEvent.Records.forEach(async record => {
     
     let { body, messageAttributes } = record;    
     const bodySQS = JSON.parse(body);
@@ -74,18 +74,18 @@ localExample = () => {
     }
     else if (pasoFuncional === "Paso2" || pasoFuncional === "Paso3") {
       logger.debug("Ingreso Avanzar");
-      let requestAvanzar = pasoFuncional === "Paso2" ? obtenerRequestAvanzarMomento1(bodySQS) : obtenerRequestAvanzarMomento2(bodySQS);
+
+      let requestAvanzar = pasoFuncional === "Paso2" 
+                                  ? obtenerRequestAvanzarMomento1(bodySQS) 
+                                  : obtenerRequestAvanzarMomento2(bodySQS);
       
       const token = await obtenerToken();           
       let idWorkItem = await obtenerWorkItem(bodySQS.idcase, token);
+
+      if(bodySQS.idcase){
       const avanceCaso = await avanzarCaso(requestAvanzar, idWorkItem[0], token);
       console.log(avanceCaso);
-
-      // Promise.all([respuestaObtenerToken, idWorkItem]).then(values => {
-      //   let idWorkItem = values[1];
-      //   let token = values[0];
-      //   avanzarCaso(requestAvanzar, idWorkItem, token);
-      // });
+      }
     }
   });
 }

@@ -1,15 +1,14 @@
 const config = require('../config/config');
 
 let header = (token) => {
-    return header = {
+    return headers = {
         'Authorization': `${token.token_type} ${token.access_token}`,
         'Content-Type': 'application/json'
     }
 }
 
-let optionsAxios = (moment, token, data, workItem) => {
-
-    // enviamos las opciones de configuración según el momento
+// enviamos la configuración para consumir el servicio con Axios según el momento del proceso
+let optionsAxios = (moment, token, data, workItem) => {  
     switch (moment) {
         case 'obtenerToken':
             return options = {
@@ -50,6 +49,7 @@ let optionsAxios = (moment, token, data, workItem) => {
     }
 }
 
+// retornamos el request que se hace en la Odata según el momento
 let requestMoments = (body, xptah) => {
     return JSON.stringify({
         startParameters: [
@@ -61,14 +61,17 @@ let requestMoments = (body, xptah) => {
     });
 }
 
+// request Odata creación de caso
 const obtenerRequestCrearCaso = (requestSQS) => {
     return requestMoments(requestSQS, 'eJson1');
 }
 
+// request Odata momento 1
 const obtenerRequestAvanzarMomento1 = (requestSQS) => {
     return requestMoments(requestSQS, 'ejson2');
 }
 
+// request Odata momento 2
 const obtenerRequestAvanzarMomento2 = (requestSQS) => {
     return requestMoments(requestSQS, 'ejson3');
 }

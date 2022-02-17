@@ -24,7 +24,7 @@ const crearCaso = async (data, token) => {
         let options = optionsAxios('crearCaso', token, data, null);
         return await axios(options);
     } catch (e) {
-        console.log(e);;
+        console.log(e);
     }
 }
 
