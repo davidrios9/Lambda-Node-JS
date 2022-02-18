@@ -1,11 +1,7 @@
-const { optionsAxios } = require('./helpers');
+const { optionsAxios } = require('../helpers/axiosOptions');
 
-const log4js = require("log4js");
 const axios = require('axios');
-const { attempt } = require('lodash');
 
-const logger = log4js.getLogger();
-logger.level = "debug";
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const obtenerToken = async () => {

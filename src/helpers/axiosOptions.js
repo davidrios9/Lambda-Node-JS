@@ -1,7 +1,7 @@
 const config = require('../config/config');
 
-let header = (token) => {
-    return headers = {
+let headers = (token) => {
+    return  {
         'Authorization': `${token.token_type} ${token.access_token}`,
         'Content-Type': 'application/json'
     }
@@ -26,7 +26,7 @@ let optionsAxios = (moment, token, data, workItem) => {
                 method: 'post',
                 baseURL: `https://${config.Hostname}${config.PathCrearCaso}`,
                 data,
-                headers: header(token)
+                headers: headers(token)
             }
             break;
         case 'obtenerWorkItem':
@@ -34,7 +34,7 @@ let optionsAxios = (moment, token, data, workItem) => {
             return options = {
                 baseURL: `https://${config.Hostname}${path}`,
                 method: 'get',
-                headers: header(token)
+                headers: headers(token)
             }
             break;
         case 'avanzarCaso':
@@ -43,43 +43,13 @@ let optionsAxios = (moment, token, data, workItem) => {
                 baseURL: `https://${config.Hostname}/${pathAC}`,
                 method: 'post',
                 data,
-                headers: header(token)
+                headers: headers(token)
             }
             break;
     }
 }
 
-// retornamos el request que se hace en la Odata según el momento
-let requestMoments = (body, xptah) => {
-    return JSON.stringify({
-        startParameters: [
-            {
-                "xpath": `idm_cat_CreditoDeConsumo.idmMOSSolicitud.${xptah}`,
-                "value": body
-            }
-        ]
-    });
-}
-
-// request Odata creación de caso
-const obtenerRequestCrearCaso = (requestSQS) => {
-    return requestMoments(requestSQS, 'eJson1');
-}
-
-// request Odata momento 1
-const obtenerRequestAvanzarMomento1 = (requestSQS) => {
-    return requestMoments(requestSQS, 'ejson2');
-}
-
-// request Odata momento 2
-const obtenerRequestAvanzarMomento2 = (requestSQS) => {
-    return requestMoments(requestSQS, 'ejson3');
-}
 
 module.exports = {
-    header,
-    obtenerRequestCrearCaso,
-    obtenerRequestAvanzarMomento1,
-    obtenerRequestAvanzarMomento2,
     optionsAxios
 }
