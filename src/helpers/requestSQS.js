@@ -1,10 +1,10 @@
-
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 // retornamos el request que se hace en la Odata según el momento
 let requestMoments = (body, xptah) => {
     return JSON.stringify({
         startParameters: [
             {
-                "xpath": `idm_cat_CreditoDeConsumo.idmMOSSolicitud.${xptah}`,
+                "xpath": `MultiOfertaBancaIndepend.${xptah}`,
                 "value": body
             }
         ]

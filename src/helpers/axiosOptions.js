@@ -1,5 +1,7 @@
 const config = require('../config/config');
 
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+
 let headers = (token) => {
     return  {
         'Authorization': `${token.token_type} ${token.access_token}`,
@@ -9,11 +11,12 @@ let headers = (token) => {
 
 // enviamos la configuración para consumir el servicio con Axios según el momento del proceso
 let optionsAxios = (moment, token, data, workItem) => {  
+
     switch (moment) {
         case 'obtenerToken':
             return options = {
                 method: 'post',
-                baseURL: `https://${config.Hostname}/${config.PathObtenerToken}`,
+                baseURL: `https://${config.Hostname}${config.PathObtenerToken}`,
                 data: config.DataObtenerToken,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -40,7 +43,7 @@ let optionsAxios = (moment, token, data, workItem) => {
         case 'avanzarCaso':
             const pathAC = config.PathAvanzarCaso.replace('IDCASE', workItem.idCase).replace('IDWORKITEM', workItem.idWorkitem);
             return options = {
-                baseURL: `https://${config.Hostname}/${pathAC}`,
+                baseURL: `https://${config.Hostname}${pathAC}`,
                 method: 'post',
                 data,
                 headers: headers(token)

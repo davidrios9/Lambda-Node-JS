@@ -18,7 +18,8 @@ const obtenerToken = async () => {
 const crearCaso = async (data, token) => {
     try {
         let options = optionsAxios('crearCaso', token, data, null);
-        return await axios(options);
+        const resp = await axios(options);
+        return resp.data;
     } catch (e) {
         console.log(e);
     }
