@@ -1,0 +1,53 @@
+steps:
+    - task: CmdLine@2
+      displayName: 'Reinstall dependencies'
+      inputs:
+        script: |
+          cd $(System.DefaultWorkingDirectory)
+          rm -rf node_modules
+          rm -f package-lock.json
+          npm install --only=prod
+          zip -r -D lambda-code.zip index.js src/ node_modules/*
+          zip -r -D acceptanceTest.zip acceptanceTest/*
+    
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+          PathtoPublish: $(System.DefaultWorkingDirectory)/lambda-code.zip
+          ArtifactName: Artifact
+
+    - task: ArtifactoryGenericUpload@1
+      displayName: 'Publish Artifact to Artifactory'
+      inputs:
+          artifactoryService: Artifactory
+          fileSpec: |
+              {
+                "files": [
+                  {
+                    "pattern": "$(System.DefaultWorkingDirectory)/lambda-code.zip",
+                    "target": "$(Artifactory.Repository)/$(Build.Repository.Name)/$(Build.BuildNumber)/"
+                  }
+                ]
+              }
+          collectBuildInfo: true
+          
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Acceptance Artifact'
+      inputs:
+          PathtoPublish: $(System.DefaultWorkingDirectory)/acceptanceTest.zip
+          ArtifactName: Acceptance
+
+    - task: ArtifactoryGenericUpload@1
+      displayName: 'Publish Acceptance Artifact to Artifactory'
+      inputs:
+          artifactoryService: Artifactory
+          fileSpec: |
+              {
+                "files": [
+                  {
+                    "pattern": "$(System.DefaultWorkingDirectory)/acceptanceTest.zip",
+                    "target": "$(Artifactory.Repository)/$(Build.Repository.Name)/$(Build.BuildNumber)/"
+                  }
+                ]
+              }
+          collectBuildInfo: true

@@ -1,0 +1,14 @@
+<testExecutions version="1">
+<file path="src\test\index.spec.js">
+<testCase name="getToken getToken" duration="1247" />
+</file>
+<file path="src\test\Bizagi.spec.js">
+<testCase name="File Bizagi test nextCase" duration="1354" />
+<testCase name="File Bizagi test nextCaseError" duration="1263" />
+<testCase name="File Bizagi test createCase" duration="1228" />
+<testCase name="File Bizagi test getWorkItem" duration="1249" />
+<testCase name="File Bizagi test createCaseError" duration="1323" />
+<testCase name="File Bizagi test getToken" duration="1268" />
+<testCase name="File Bizagi test getTokenError" duration="1206" />
+</file>
+</testExecutions>

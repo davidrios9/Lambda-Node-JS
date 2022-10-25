@@ -3,7 +3,6 @@ const config = require('./config.json');
 // requires
 const _ = require('lodash');
 
-
 const defaultConfig = config.local;
 const environment = 'local';
 const environmentConfig = config[environment];

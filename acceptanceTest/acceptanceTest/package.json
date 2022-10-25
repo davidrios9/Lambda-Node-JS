@@ -1,0 +1,8 @@
+{
+  "name": "acceptancetest",
+  "version": "1.0.0",
+  "description": "pruebas de aceptación ",
+  "main": "acceptance-test.js",
+  "author": "icubides",
+  "license": "ISC"
+}

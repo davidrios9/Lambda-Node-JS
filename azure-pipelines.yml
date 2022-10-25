@@ -1,0 +1,32 @@
+name: $(Build.SourceBranchName).$(date:yyyyMMdd)$(rev:.r)
+
+variables:
+    - name: Artifactory.Repository
+      value: 'build-AW1285_Bizagi_VentasDigitales'
+
+trigger:
+    branches:
+        include:
+            - trunk
+            - feature/*
+
+resources:
+    - repo: self
+      clean: all
+      fetchDepth: 1
+
+stages:
+    - stage: Build
+      displayName: Build and Publish
+      jobs:
+          - job: Linux
+            displayName: Build and publication of artifact
+            pool:
+                name: Build
+                demands:
+                  - Agent.OS -equals Linux 
+                    
+            steps:
+                - template: pipelines/build.yml
+                - ${{ if  eq(variables['Build.SourceBranch'], 'refs/heads/trunk') }}:
+                      - template: pipelines/deploy.yml

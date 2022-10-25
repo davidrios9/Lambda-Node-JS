@@ -1,16 +1,16 @@
 {
     "local": {
         "config_id": "local",
-        "PathCrearCaso": "/Laboratorio/odata/data/processes(ca538f97-9dbc-4f8e-ac52-e65196564e22)/start",
+        "PathCrearCaso": "/BIZAGIACD/odata/data/processes(ca538f97-9dbc-4f8e-ac52-e65196564e22)/start",
         "PathObtenerWorkItem": "/BIZAGIACD/odata/data/cases(IDCASE)/workitems",
         "PathAvanzarCaso": "/BIZAGIACD/odata/data/cases(IDCASE)/workitems(IDWORKITEM)/next",
-        "PathObtenerToken": "/Laboratorio/oauth2/server/token",
+        "PathObtenerToken": "/BIZAGIACD/oauth2/server/token",
         "DataObtenerToken": "grant_type=client_credentials&scope=api",
         "Hostname": "10.104.20.160",
         "Authorization": "Basic NWZhMmFhMjQwYzc1MmQ4YmVkZjkwY2I0NDhlY2U3MDI5NjNmN2QyMDo5OTI2ZTYyZjZlNTgyMTUxMjVkMGFlZDc3Y2VhMWIwYzEyYWU5YjFj"
     },
     "dev": {
-        "config_id": "dev",        
+        "config_id": "dev",       
         "PathCrearCaso": "/BIZAGIACD/odata/data/processes(6897bac5-3c8f-4ca0-95d8-3142e825144d)/start",
         "PathObtenerWorkItem": "/BIZAGIACD/odata/data/cases(IDCASE)/workitems",
         "PathAvanzarCaso": "/BIZAGIACD/odata/data/cases(IDCASE)/workitems(IDWORKITEM)/next",
